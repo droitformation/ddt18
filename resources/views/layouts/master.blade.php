@@ -40,8 +40,9 @@
     <body id="top">
 
         <div id="wrapper">
+
             <!-- START container -->
-            <div class="container">
+            <div class="container" style="flex: 1;">
                 <!-- START HEADER -->
                 <div id="header-wrapper">
 
@@ -92,7 +93,5 @@
             <!-- END FOOTER -->
 
         </div> <!-- END Container -->
-        <a href="#" id="back-top">Top</a>
-
     </body>
 </html>

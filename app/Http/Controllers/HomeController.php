@@ -50,7 +50,7 @@ class HomeController extends Controller
         $page    = $this->content->page($this->pages['auteur']);
         $pub     = $page->blocs;
 
-        return view('frontend.auteur')->with(['auteurs' => $auteurs, 'pub' => $pub]);
+        return view('frontend.auteur')->with(['auteurs' => $auteurs, 'page' => $page, 'pub' => $pub]);
     }
 
     public function colloque()
@@ -83,13 +83,13 @@ class HomeController extends Controller
 
     public function campagne($id = null)
     {
-        $archives   = $this->jurisprudence->archives();
+       // $archives   = $this->jurisprudence->archives(date('Y'));
         $newsletter = $this->jurisprudence->campagne($id);
 
         $blocs = isset($newsletter['blocs']) ? $newsletter['blocs'] : collect([]);
         $campagne = isset($newsletter['campagne']) ? $newsletter['campagne'] : null;
 
-        return view('frontend.campagne')->with(['campagne' => $campagne, 'blocs' => $blocs, 'archives' => $archives]);
+        return view('frontend.campagne')->with(['campagne' => $campagne, 'blocs' => $blocs, 'archives' => collect([])]);
     }
 
     /**
@@ -100,10 +100,22 @@ class HomeController extends Controller
     public function contact()
     {
         $page = $this->content->page($this->pages['contact']);
+        $pub  = $page->blocs;
 
-        return view('frontend.contact')->with(['page' => $page]);
+        return view('frontend.contact')->with(['page' => $page, 'pub' => $pub]);
     }
 
+    /**
+     * Contact form
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function archive()
+    {
+        $archives = $this->jurisprudence->archives();
+
+        return view('frontend.archive')->with(['archives' => $archives]);
+    }
 
     /**
      * Send contact message

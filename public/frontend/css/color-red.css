@@ -60,3 +60,9 @@ ul.item-nav li:hover {background: #dd0330;}
 
 div.jp-play-bar {background-color: #dd0330;}
 div.jp-volume-bar-value {background-color: #dd0330;}
+
+.widget a {
+    text-transform: none;
+    font-weight: 600;
+    color: #dd0330;
+}

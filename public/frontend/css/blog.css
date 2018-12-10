@@ -36,7 +36,7 @@ CSS overview:
 	padding-left: 30px;
 }
 #sidebar, #inner-contact{
-    padding-top: 40px;
+    padding-top: 30px;
 }
 
 .media-body p{
@@ -48,14 +48,11 @@ margin: 0;
 }
 
 .soutiens{
-    position: absolute;
-    top: -25px;
-    right: 25px;
     width: 120px;
 }
 
 .fixed{
-    top: 230px;
+    top: 215px;
     width: 300px;
     position: fixed;
 }
@@ -198,8 +195,8 @@ margin: 0;
 			POST
 ---------------------------------------------------*/
 .post, .bloc-content {
-	margin: 0 0 20px 0;
-	padding: 0 0 20px 0;
+	margin: 0 0 10px 0;
+	padding: 0 0 10px 0;
 	overflow: hidden;
 }
 
@@ -570,9 +567,9 @@ margin: 0;
 	display: block;
 }
 .post-title h2.title, .post-title h2.title a, .bloc-newsletter h2{
-	font: 300 20px/30px 'Open Sans',Helvetica,Arial,sans-serif;
+	font: 300 18px/24px 'Open Sans',Helvetica,Arial,sans-serif;
 	text-transform: uppercase;
-	margin: 0 0 20px 0;
+	margin: 0 0 10px 0;
 }
 
 .bloc-newsletter h2{
@@ -581,9 +578,9 @@ margin: 0;
 }
 
 .bloc-newsletter{
-	margin: 0 0 30px;
+	margin: 0 0 10px;
 	overflow: hidden;
-	padding: 5px 15px 20px 0;
+	padding: 5px 15px 0px 0;
 }
 
 .bloc-newsletter .row div:nth-child(2){
@@ -1313,4 +1310,53 @@ p.align-justify{
 	color: #000;
 	background-color: #e3e3e3;
 	border-color: #e3e3e3;
+}
+
+
+.mb-2{
+	margin-bottom: 40px;
+}
+.mt-2{
+	margin-top: 40px;
+}
+
+.media-author{
+	margin: 20px 0 30px 0;
+	padding-bottom: 20px;
+	border-bottom: 1px dotted #e6e6e6;
+}
+
+.media-author:last-child{
+	border-bottom: none;
+}
+
+.media-author .media-object{
+	width: 100px;
+	overflow: hidden;
+	border-radius: 5px;
+	border-color:#fff ;
+}
+
+.media-author .bio-body{
+	padding: 0 20px;
+}
+
+.media-author .bio-body h3{
+	font-size: 20px;
+}
+
+.media-author .bio-body h5{
+	margin-top: 15px;
+	font-size: 16px;
+}
+
+.analyse_auteur li h5{
+	margin: 10px 0 5px 0;
+	font-size: 14px;
+}
+
+.analyse_auteur li p{
+	margin-bottom: 10px;
+	font-size: 14px;
+	line-height: 18px;
 }

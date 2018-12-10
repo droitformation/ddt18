@@ -13,7 +13,7 @@ class Jurisprudence
         $this->client  = new \GuzzleHttp\Client([ 'verify' => false ]);
 
         $environment = app()->environment();
-        $this->base_url = ($environment == 'local' ? 'http://dpapi.local/api' : 'https://www.publications-droit.ch');
+        $this->base_url = ($environment == 'local' ? 'https://shop.local/hub' : 'https://www.publications-droit.ch/hub');
     }
 
     public function getData($url, $params = null){
@@ -74,8 +74,8 @@ class Jurisprudence
         return $campagne->all();
     }
 
-    public function archives()
+    public function archives($year = null)
     {
-        return $this->getData('archives', ['params' => ['site_id' => $this->site]]);
+        return $this->getData('archives', ['params' => ['site_id' => $this->site, 'year' => $year]]);
     }
 }

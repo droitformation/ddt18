@@ -16,6 +16,7 @@ Route::get('auteur', 'HomeController@auteur');
 Route::get('page/{id}', 'HomeController@page');
 Route::get('contact', 'HomeController@contact');
 Route::get('colloque', 'HomeController@colloque');
+Route::get('archive', 'HomeController@archive');
 Route::get('jurisprudence', 'HomeController@jurisprudence');
 Route::get('campagne/{id?}', 'HomeController@campagne');
 Route::post('sendMessage', 'HomeController@sendMessage');

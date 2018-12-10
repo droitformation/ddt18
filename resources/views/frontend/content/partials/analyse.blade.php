@@ -17,9 +17,9 @@
             @endforeach
         @endif
 
-        <p class="italic">{!! $analyse->abstract !!}</p>
     </div><!--END POST-TITLE-->
-    <div class="post-entry" style="padding-top: 5px;">
+    <div class="post-entry" style="padding-top: 15px;">
+        <p class="italic">{!! $analyse->abstract !!}</p>
         @if($analyse->file)
             <p><a target="_blank" href="{{ $analyse->file }}">Télécharger cette analyse en PDF &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></a></p>
         @endif

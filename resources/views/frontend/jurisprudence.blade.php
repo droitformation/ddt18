@@ -12,8 +12,8 @@
     </div>
 </div><!--END PAGE-HEADER-->
 
-<div class="row">
-    <div id="filteringApp" ng-app="filtering">
+<div id="filteringApp" ng-app="filtering">
+    <div class="row" id="filter">
         <div id="inner-content" class="col-md-8 col-xs-12">
             <div id="filtering">
                 <div class="arrets">
@@ -28,7 +28,7 @@
 
                             <div class="arret {{ $arret->filter }} y{{ $arret->year }} clear">
                                 <div class="row">
-                                    <div class="col-md-9">
+                                    <div class="col-md-9 col-sm-8">
                                         <div class="post">
                                             <div class="post-title">
                                                 <h3 class="title">{{ $arret->reference }} du {{ $arret->pub_date }}</h3>
@@ -44,7 +44,7 @@
                                             </div>
                                         </div><!--END POST-->
                                     </div>
-                                    <div class="col-md-3 listCat">
+                                    <div class="col-md-3 col-sm-4 listCat">
                                         @if(!empty($arret->categories))
                                             @foreach($arret->categories as $categorie)
                                                 <img style="max-width: 140px;" border="0" alt="{{ $categorie->title }}" src="{{ $categorie->image }}">

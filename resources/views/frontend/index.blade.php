@@ -2,20 +2,13 @@
 @extends('layouts.master')
 @section('content')
 
+
 <div class="row">
     <div class="col-md-12">
-        <div class="page-header text-align-left">
-
-            <div class="row">
-                <div class="col-md-8">
-                    <h1 class="title uppercase">Nouveautés dans le domaine du droit du travail</h1>
-                </div>
-                <div class="col-md-4 text-right">
-                    @include('partials.soutien')
-                </div>
-            </div>
-
-        </div><!--END PAGE-HEADER-->
+        <div class="page-header">
+            <h1 class="title uppercase">Nouveautés dans le domaine du droit du travail</h1>
+            @include('partials.soutien')
+        </div>
     </div>
 </div>
 
@@ -39,7 +32,7 @@
 
         <div id="bloc_content">
             @if(isset($homepage) && !empty($homepage->contents))
-                @foreach(collect($homepage->contents)->chunk(2) as $bloc)
+                @foreach(collect($homepage->contents)->chunk(2) as $i => $bloc)
                     <div class="row">
                         @foreach($bloc as $index => $content)
                             <?php $nbr = $index > 1 ? 12 : 6 ; ?>
@@ -49,7 +42,7 @@
                             </div>
                         @endforeach
                     </div><!-- end row -->
-                    {!! $index > 1 ? '<div class="divider-border"></div>' : '' !!}
+                    {!! $index > 0 ? '<div class="divider-border"></div>' : '' !!}
                 @endforeach
             @endif
         </div>

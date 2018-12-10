@@ -143,6 +143,7 @@ h3.title{
 
 h3.title.soutien{
     font-size: 10px;
+	line-height: 15px;
 }
 
 h4.title{
@@ -379,16 +380,10 @@ img {
 			MAIN CONTENT
 ---------------------------------------------------*/
 #wrapper {
-	position: relative;
-	z-index: 2;
-	padding-bottom: 80px;
 	background-color: #FFF;
-	box-shadow:
-	0 1px 1px rgba(0, 0, 0, 0.15), /* The top layer shadow */
-    0 3px 0 -1px rgba(255, 255, 255, 1), /* The second layer */
-    0 3px 1px 0 rgba(0, 0, 0, 0.15), /* The second layer shadow */
-    0 6px 0 -2px rgba(255, 255, 255, 1), /* The third layer */
-    0 6px 2px -1px rgba(0, 0, 0, 0.15); /* The third layer shadow */
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
 }
 #header-wrapper {
 	width: 100%;
@@ -531,8 +526,9 @@ img {
 #about {
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
 	color: #fff;
-    height: 258px;
-    margin-bottom: 20px;
+	height: 278px;
+	margin-bottom: 0;
+	overflow: hidden;
 }
 
 #about img {
@@ -807,11 +803,16 @@ li.open a .sf-sub-indicator:after, li.open li.open a .sf-sub-indicator:after, li
 		  PAGE HEADER
 ---------------------------------------------------*/
 .page-header {
-
-	margin: 0 auto;
-	padding: 30px 0;
+	padding-top: 10px;
+	padding-left: 0px;
+	padding-right:0;
 	border-top: 2px solid #eee;
 	border-bottom: 2px solid #eee;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 0px;
 }
 .page-header .title, .page-header .title a  {
 	margin-bottom: 0;
@@ -842,14 +843,11 @@ li.open a .sf-sub-indicator:after, li.open li.open a .sf-sub-indicator:after, li
 ---------------------------------------------------*/
 #footer {
 	width: 100%;
-	z-index: 1;
     background: #f5f5f5;
 	color: #999;
-	float: left;
-    padding: 30px 0;
+	padding: 15px 0;
 }
 #footer.fixed {
-
 	bottom: 0;
 	left: 0;
 }

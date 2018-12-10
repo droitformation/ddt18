@@ -3,11 +3,11 @@
     <div class="widget">
         <h3 class="title"><i class="glyphicon glyphicon-pushpin"></i> &nbsp;New</h3>
 
+        <?php $pub = collect($pub)->whereNotIn('type','soutien'); ?>
         @foreach($pub as $ad)
             @if( !empty($ad->title) && !empty($ad->url) && !empty($ad->image))
                 <div class="media">
                     <div class="media-body">
-	                    
 	                    <div class="row">
 		                    <div class="col-md-4 col-sm-5">
 			                     <a class="media-left" style="margin-bottom: 5px;" target="_blank" href="{{ $ad->url }}">
@@ -20,7 +20,7 @@
 			                     <a class="button small grey" target="_blank" href="{{ $ad->url }}">En savoir plus</a>
 			                </div>
 	                    </div>
-                        
+
                     </div>
                 </div>
             @elseif(!empty($ad->url) && !empty($ad->image))

@@ -3,17 +3,11 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="page-header text-align-left">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h1 class="title uppercase">{{ $page->title }}</h1>
-                        <h2 class="subtitle">{!! $page->excerpt !!}</h2>
-                    </div>
-                    <div class="col-md-4 text-right">
-                        @include('partials.soutien')
-                    </div>
-                </div>
-            </div><!--END PAGE-HEADER-->
+            <div class="page-header">
+                <h1 class="title uppercase">{{ $page->title }}</h1>
+                <h2 class="subtitle">{!! $page->excerpt !!}</h2>
+                @include('partials.soutien')
+            </div>
         </div>
     </div>
 
@@ -23,7 +17,7 @@
             @include('partials.message')
 
             <div class="row">
-                <div class="col-md-4 col-sx-12">
+                <div class="col-md-4 col-sx-12 address-bloc">
                     <h2 class="title">Faculté de droit</h2>
                     <p><strong>Adresse</strong>: Avenue du 1er-Mars 26, 2000 Neuchâtel<br>
                         <strong>Telephone</strong>: +41 32 / 718 12 22<br>

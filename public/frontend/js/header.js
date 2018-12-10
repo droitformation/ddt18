@@ -40,14 +40,14 @@ function bra_add_sticky(add_sticky){
 	if (order) header = fullwidth_h; else header = 0; 
 
 	//alert(header + " + " + fullwidth_h);
-	
-	if( (window_w > 960) && ($(window).scrollTop() > header) && add_sticky) {
+	console.log(window_w);
+	if( (window_w > 780) && ($(window).scrollTop() > header) && add_sticky) {
 		//alert("inicijalni sticky " + order)
 		$('#header-wrapper').addClass("sticky");
 		$('#content-wrapper').css("margin-top", $('#header-wrapper').outerHeight() + "px")
 	}
 
-	if ( (window_w > 960) && add_sticky){
+	if ( (window_w > 780) && add_sticky){
 		
 		$(window).scroll(function(){
 				

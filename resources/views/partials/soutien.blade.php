@@ -1,8 +1,15 @@
-<div class="soutiens">
-    <h3 class="title soutien"><i class="glyphicon glyphicon-star-empty"></i> &nbsp;Avec le soutien de</h3>
-    <div class="media soutien-media">
-        <a target="_blank" href="http://www.staempfliverlag.com/verlag?bpmlang=fr&Coupon=42E72341LuyHiwSM&utm_source=unine&utm_medium=website&utm_campaign=unine-2015&utm_content=logo">
-            <img src="{{ url('frontend/images/logos/Staempfli100px.png')}}" alt="Soutiens" />
-        </a>
+@if(isset($pub))
+    <div class="soutiens">
+        <h3 class="title soutien"><i class="glyphicon glyphicon-star-empty"></i> &nbsp;Avec le soutien de</h3>
+        <div class="media soutien-media">
+            <?php $soutiens = collect($pub)->where('type','soutien'); ?>
+            @if(!$soutiens->isEmpty())
+                @foreach($soutiens as $soutien)
+                    <a target="_blank" href="{{ $soutien->url }}">
+                        <img height="50px" src="{{ $soutien->image }}" alt="Soutiens" />
+                    </a>
+                @endforeach
+            @endif
+        </div>
     </div>
-</div>
+@endif
