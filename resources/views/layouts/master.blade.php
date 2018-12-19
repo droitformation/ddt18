@@ -22,6 +22,7 @@
         <link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/css/chosen.css');?>">
         <link rel="stylesheet" type="text/css" href="<?php echo asset('frontend/css/jquery.fancybox.min.css');?>">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?php echo asset('frontend/css/sites.css');?>">
 
         <!-- Javascript Files
         ================================================== -->
@@ -91,6 +92,8 @@
                 </div><!--END SECTION-->
             </div><!--END FOOTER-->
             <!-- END FOOTER -->
+
+            @include('partials.logos', ['current' => 'droitdutravail'])
 
         </div> <!-- END Container -->
     </body>
