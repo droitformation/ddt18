@@ -16,7 +16,7 @@
 		                    </div>
 		                    <div class="col-md-8  col-sm-7">
 			                    <h4 class="media-heading">{{ $ad->title }}</h4>
-			                     <div style="text-align: left; margin-bottom: 5px;">{!! $ad->content or '' !!}</div>
+			                     <div style="text-align: left; margin-bottom: 5px;">{!! $ad->content ?? '' !!}</div>
 			                     <a class="button small grey" target="_blank" href="{{ $ad->url }}">En savoir plus</a>
 			                </div>
 	                    </div>
