@@ -7,7 +7,7 @@
                 <li>
                     <?php setlocale(LC_ALL, 'fr_FR.UTF-8');  ?>
                     <span class="date">{{ $last->pub_date }}</span>
-                    <a href="{{ url('jurisprudence').'/#'.$last->reference }}">{{ $last->reference }}</a>
+                    <a href="{{ url('jurisprudence').'/#analyse_'.$last->reference }}">{{ $last->reference }}</a>
                     <p class="text-justify">{{ $last->abstract }}</p>
                 </li>
             @endforeach

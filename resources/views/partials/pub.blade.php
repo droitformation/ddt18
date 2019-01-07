@@ -11,7 +11,7 @@
 	                    <div class="row">
 		                    <div class="col-md-4 col-sm-5">
 			                     <a class="media-left" style="margin-bottom: 5px;" target="_blank" href="{{ $ad->url }}">
-		                            <img style="max-width: 130px;" src="{{ $ad->image }}" alt="{{ $ad->title or 'image' }}" />
+		                            <img style="max-width: 130px;" src="{{ $ad->image }}" alt="{{ $ad->title ?? 'image' }}" />
 		                        </a>
 		                    </div>
 		                    <div class="col-md-8  col-sm-7">
@@ -26,12 +26,12 @@
             @elseif(!empty($ad->url) && !empty($ad->image))
                 <div class="media">
                     <a class="pub-image-simple" target="_blank" href="{{ $ad->url }}">
-                        <img style="width:130px;" src="{{ $ad->image }}" alt="{{ $ad->title or 'image' }}" />
+                        <img style="width:130px;" src="{{ $ad->image }}" alt="{{ $ad->title ?? 'image' }}" />
                     </a>
                 </div>
             @elseif(!empty($ad->image))
                 <div class="media">
-                    <img style="width:130px;" src="{{ $ad->image }}" alt="{{ $ad->title or 'image' }}" />
+                    <img style="width:130px;" src="{{ $ad->image }}" alt="{{ $ad->title ?? 'image' }}" />
                 </div>
             @endif
 

@@ -13,6 +13,7 @@
                                 @if(!empty($analyse->arrets))
                                     <ul>
                                         @foreach($analyse->arrets as $reference => $arret)
+                                            <a class="anchor_top" name="analyse_{{ $reference }}"></a>
                                             <li><a href="#{{ $reference }}">{{ $arret }}</a></li>
                                         @endforeach
                                     </ul>
