@@ -54,4 +54,12 @@ class Content
         return $this->getData('menu', $params);
     }
 
+    public function pdf($id)
+    {
+        $params = ['params' => ['site_id' => $this->site, 'id' => $id]];
+        $params = array_filter($params);
+
+        return $this->getData('pdf', $params);
+    }
+
 }

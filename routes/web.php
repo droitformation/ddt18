@@ -20,3 +20,4 @@ Route::get('archive', 'HomeController@archive');
 Route::get('jurisprudence', 'HomeController@jurisprudence');
 Route::get('campagne/{id?}', 'HomeController@campagne');
 Route::post('sendMessage', 'HomeController@sendMessage');
+Route::get('pdf/{id}', 'HomeController@pdf');

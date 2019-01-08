@@ -83,7 +83,6 @@ class HomeController extends Controller
 
     public function campagne($id = null)
     {
-       // $archives   = $this->jurisprudence->archives(date('Y'));
         $newsletter = $this->jurisprudence->campagne($id);
 
         $blocs = isset($newsletter['blocs']) ? $newsletter['blocs'] : collect([]);
@@ -133,4 +132,12 @@ class HomeController extends Controller
         return redirect()->back()->with(['status' => 'success', 'message' => '<strong>Merci pour votre message</strong><br/>Nous vous contacterons dès que possible.']);
     }
 
+    public function pdf($id)
+    {
+        $environment = app()->environment();
+        $base = ($environment == 'local' ? 'https://shop.local/' : 'https://www.publications-droit.ch/');
+        $url  = $base.'hub/pdf/'.$id.'/'.env('APP_SITE');
+
+        return redirect($url);
+    }
 }
