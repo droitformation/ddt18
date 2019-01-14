@@ -24,7 +24,7 @@
                     <dt><strong><i class="fa fa-calendar" aria-hidden="true"></i> &nbsp;Année {{ $year }}</strong></dt>
                         @foreach($campagnes as $campagne)
                             <dd>
-                                <h5><a href="{{ url('newsletter/campagne/'.$campagne->id )}}">{{ $campagne->sujet }}</a></h5>
+                                <h5><a href="{{ url('campagne/'.$campagne->id )}}">{{ $campagne->sujet }}</a></h5>
                             </dd>
                         @endforeach
                     </dl>
