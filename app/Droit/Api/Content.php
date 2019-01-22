@@ -13,7 +13,7 @@ class Content
         $this->client  = new \GuzzleHttp\Client([ 'verify' => false ]);
 
         $environment = app()->environment();
-        $this->base_url = ($environment == 'local' ? 'https://shop.local/hub' : 'https://www.publications-droit.ch/hub');
+        $this->base_url = ($environment == 'local' ? 'https://shop.test/hub' : 'https://www.publications-droit.ch/hub');
     }
 
     public function getData($url, $params = null){

@@ -10,6 +10,7 @@
                             <div class="post-title">
                                 <a class="anchor_top" name="analyse_{{ $analyse->id }}"></a>
                                 <h3 class="title">Analyse de {{ $analyse->authors_list }}</h3>
+                                <p class="italic">{!! $analyse->remarque ?? $analyse->abstract !!}</p>
                                 @if(!empty($analyse->arrets))
                                     <ul>
                                         @foreach($analyse->arrets as $reference => $arret)
@@ -20,7 +21,6 @@
                                 @endif
                             </div><!--END POST-TITLE-->
                             <div class="post-entry">
-                                <p class="italic">{!! $analyse->abstract !!}</p>
                                 @if($analyse->file)
                                     <p><a target="_blank" href="{{ $analyse->file }}">Télécharger cette analyse en PDF &nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i></a></p>
                                 @endif
