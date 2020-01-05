@@ -46,7 +46,7 @@ class ColloqueWorker{
                 $organisateurs = $colloque['organisateur'];
                 $organisateurs = array_values($organisateurs);
 
-                $centre = (count($organisateurs) > 1 ? 'both' : $organisateurs[0]);
+                $centre = (count($organisateurs) > 1 ? 'Cert et Cemaj' : $organisateurs[0]);
                 $organise[$centre][] = $colloque;
             }
 
