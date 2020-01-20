@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SendMessageRequest;
+use mysql_xdevapi\Collection;
 
 class HomeController extends Controller
 {
@@ -19,7 +20,7 @@ class HomeController extends Controller
         $this->worker = new \App\Droit\Api\ColloqueWorker();
 
         $menu = $this->content->menu('main');
-        $this->pages = collect($menu->pages)->pluck('id','slug')->all();
+        $this->pages = isset($menu->pages) ? collect($menu->pages)->pluck('id','slug')->all() : collect([]);
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -33,7 +34,7 @@ class HomeController extends Controller
     {
         $homepage = $this->content->homepage();
         $page     = $this->content->page($this->pages['/']);
-        $pub      = $page->blocs;
+        $pub      = isset($page->blocs) ? $page->blocs : collect([]);
         $arrets   = $this->jurisprudence->arrets(['limit' => 5]);
 
         return view('frontend.index')->with(['homepage' => $homepage, 'arrets' => $arrets, 'pub' => $pub]);
@@ -48,7 +49,7 @@ class HomeController extends Controller
     {
         $auteurs = $this->jurisprudence->authors();
         $page    = $this->content->page($this->pages['auteur']);
-        $pub     = $page->blocs;
+        $pub     = isset($page->blocs) ? $page->blocs : collect([]);
 
         return view('frontend.auteur')->with(['auteurs' => $auteurs, 'page' => $page, 'pub' => $pub]);
     }
@@ -59,7 +60,7 @@ class HomeController extends Controller
         $archives  = $this->worker->getArchives();
 
         $page = $this->content->page($this->pages['colloque']);
-        $pub  = $page->blocs;
+        $pub  = isset($page->blocs) ? $page->blocs : collect([]);
 
         return view('frontend.colloque')->with(array('colloques' => $colloques, 'archives' => $archives , 'pub' => $pub));
     }
@@ -99,7 +100,7 @@ class HomeController extends Controller
     public function contact()
     {
         $page = $this->content->page($this->pages['contact']);
-        $pub  = $page->blocs;
+        $pub  = isset($page->blocs) ? $page->blocs : collect([]);
 
         return view('frontend.contact')->with(['page' => $page, 'pub' => $pub]);
     }
