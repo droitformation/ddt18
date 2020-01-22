@@ -3,59 +3,65 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\FakeGuzzleClientResponses;
 use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Exception\RequestException;
 
 class JurisprudenceTest extends TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        \Mockery::close();
+        parent::tearDown();
+    }
+
     public function testJurisprudenceHasToUpdate500Error()
     {
-        $mock = new MockHandler([
-            new Response(500, ['X-Foo' => 'Bar'],'Hello, World'),
-        ]);
+        $helper = new \App\Droit\Helper\Helper();
 
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
+        $mock = $this->mock(Client::class);
+        $mock->shouldReceive('get')->andReturn(new Response(500, [], 'Hello World'));
 
-        $jurisprudence = new \App\Droit\Api\Jurisprudence(5,$client);
+        $jurisprudence = new \App\Droit\Api\Jurisprudence(5,$mock);
 
         $this->assertFalse($jurisprudence->toUpdate());
     }
 
-    public function testJurisprudenceHasToUpdateYes()
+   public function testJurisprudenceHasToUpdateYes()
     {
-        config(['maj.hub' => \Carbon\Carbon::today()->subDays(5)->toDateString()]);
 
-        $mock = new MockHandler([
-            new Response(200, ['X-Foo' => 'Bar'],json_encode(['date' => \Carbon\Carbon::today()->toDateString()])),
-        ]);
+        $helper = new \App\Droit\Helper\Helper();
+        $helper->setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
 
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
+        \Cache::shouldReceive('flush')->andReturn(true);
 
-        $jurisprudence = new \App\Droit\Api\Jurisprudence(5,$client);
+        $mock = $this->mock(\GuzzleHttp\Client::class);
+        $mock->shouldReceive('get')->andReturn(
+            new Response(200,[], json_encode(['date' => \Carbon\Carbon::today()->subDays(4)->toDateString()]))
+        );
 
-        $this->assertTrue($jurisprudence->toUpdate());
+        $jurisprudence = new \App\Droit\Api\Jurisprudence(5,$mock);
+
+        $result = $jurisprudence->toUpdate();
+
+        $this->assertTrue($result);
     }
 
     public function testJurisprudenceHasToUpdateNo()
     {
-        config(['maj.hub' => \Carbon\Carbon::today()->toDateString()]);
+        $helper = new \App\Droit\Helper\Helper();
+        $helper->setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
 
-        $mock = new MockHandler([
-            new Response(200, ['X-Foo' => 'Bar'],json_encode(['date' => \Carbon\Carbon::today()->toDateString()])),
-        ]);
+        $mock = $this->mock(\GuzzleHttp\Client::class);
+        $mock->shouldReceive('get')->andReturn(
+            new Response(200,[], json_encode(['date' => \Carbon\Carbon::today()->toDateString()]))
+        );
 
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
-
-        $jurisprudence = new \App\Droit\Api\Jurisprudence(5,$client);
+        $jurisprudence = new \App\Droit\Api\Jurisprudence(5,$mock);
 
         $this->assertFalse($jurisprudence->toUpdate());
     }

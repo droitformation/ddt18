@@ -1,66 +1,26 @@
 <?php namespace App\Droit\Api;
 
-use GuzzleHttp\Exception\GuzzleException;
+use App\Droit\Api\FetchData;
 
 class Content
 {
+    use FetchData;
+
     public $site;
+    public $file = 'colloque';
     protected $client;
     protected $base_url;
     protected $helper;
 
-    public function __construct($site)
+    public function __construct($site,$client = null)
     {
         $this->site = $site;
-
-        $this->client  = new \GuzzleHttp\Client([ 'verify' => false ,'http_errors' => false]);
         $this->helper = new \App\Droit\Helper\Helper();
+        $this->client = $client ? $client : new \GuzzleHttp\Client(['verify' => false, 'http_errors' => false,'debug' => true]);
 
-        $environment = app()->environment();
-        $this->base_url = ($environment == 'local' ? 'https://shop.test/hub' : 'https://www.publications-droit.ch/hub');
+        $this->base_url = (\App::environment() == 'local' ? 'https://shop.test/hub' : 'https://www.publications-droit.ch/hub');
 
         $this->toUpdate();
-    }
-
-    public function getData($url, $params = null){
-
-        $action = $params ? 'post' : 'get';
-
-        try {
-            $response = $this->client->$action( $this->base_url.'/'.$url, ['query' => $params]);
-            $data     = json_decode($response->getBody(), true);
-
-            if(!empty($data) && isset($data['data'])){
-                return json_decode(json_encode($data['data']));
-            }
-        }
-        catch (GuzzleException $error) {}
-
-        return null;
-    }
-
-    public function toUpdate()
-    {
-        $current  = $this->helper->getMaj('colloque');
-        $response = $this->client->get($this->base_url.'/maj',['http_errors' => false]);
-
-        // response from server
-        if($response->getStatusCode() == 200){
-            $data = json_decode($response->getBody(), true);
-            $last = isset($data['date']) ? $data['date'] : \Carbon\Carbon::today()->toDateString();
-
-            if($last == $current){
-                return false;
-            }else{
-                \Cache::flush();
-
-                $this->helper->setMaj($last,'colloque');
-                \Illuminate\Support\Facades\Artisan::call('cache:clear');
-            }
-        }
-
-        // no response from server get cached items
-        return false;
     }
 
     public function homepage()
@@ -75,7 +35,7 @@ class Content
 
     public function page($id)
     {
-        $params = ['params' => ['site_id' => $this->site, 'id' => $id]];
+        $params = ['params' => ['id' => $id]];
         $params = array_filter($params);
 
         return \Cache::rememberForever('page_'.$id, function () use ($params,$id) {
@@ -88,9 +48,16 @@ class Content
         $params = ['params' => ['site_id' => $this->site, 'position' => $position]];
         $params = array_filter($params);
 
-        return \Cache::rememberForever('menu', function () use ($params) {
+      /*  $menu = \Cache::rememberForever('menu', function () use ($params) {
             return $this->getData('menu', $params);
-        });
+        });*/
+        $menu = $this->getData('menu', $params);
+
+
+        echo '<pre>';
+        print_r($menu);
+        echo '</pre>';
+        exit();
     }
 
     public function pdf($id)

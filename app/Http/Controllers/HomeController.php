@@ -15,11 +15,12 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->content  = new \App\Droit\Api\Content(env('APP_SITE'));
-        $this->jurisprudence = new \App\Droit\Api\Jurisprudence(env('APP_SITE'));
+        $this->content  = new \App\Droit\Api\Content(config('app.site'));
+        $this->jurisprudence = new \App\Droit\Api\Jurisprudence(config('app.site'));
         $this->worker = new \App\Droit\Api\ColloqueWorker();
 
         $menu = $this->content->menu('main');
+
         $this->pages = isset($menu->pages) ? collect($menu->pages)->pluck('id','slug')->all() : collect([]);
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
