@@ -9,12 +9,11 @@ trait FetchData
 
         $last = $this->process($response,$current);
 
-        // can't return true after cache flush -_.._-
         if($last != $current){
+            \Log::info('flushed');
             \Cache::flush();
+            $this->toUpdate = true;
         }
-
-        return $last != $current ? true : false;
     }
 
     public function process($response)
@@ -40,12 +39,7 @@ trait FetchData
             $response = $this->client->$action($this->base_url.'/'.$url, ['query' => $params]);
             $data     = json_decode($response->getBody(), true);
 
-            if(!empty($data) && isset($data['data'])){
-                $collection = new \Illuminate\Support\Collection($data['data']);
-                return $collection->map(function ($item, $key) {
-                    return json_decode(json_encode($item));
-                });
-            }
+            return $this->prepareData($data);
         }
         catch (GuzzleException $error) {}
 

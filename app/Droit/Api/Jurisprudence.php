@@ -12,6 +12,8 @@ class Jurisprudence
     protected $base_url;
     protected $helper;
 
+    public $toUpdate = false;
+
     public function __construct($site, $client = null)
     {
         $this->site = $site;
@@ -21,6 +23,19 @@ class Jurisprudence
         $this->base_url = (\App::environment() == 'local' ? 'https://shop.test/hub' : 'https://www.publications-droit.ch/hub');
 
         $this->toUpdate();
+    }
+
+    public function prepareData($data)
+    {
+        if(!empty($data) && isset($data['data'])){
+            $collection = new \Illuminate\Support\Collection($data['data']);
+
+            return $collection->map(function ($item, $key) {
+                return json_decode(json_encode($item));
+            });
+        }
+
+        return collect([]);
     }
 
     public function arrets($data = [])

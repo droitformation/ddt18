@@ -12,15 +12,26 @@ class Content
     protected $base_url;
     protected $helper;
 
+    public $toUpdate = false;
+
     public function __construct($site,$client = null)
     {
         $this->site = $site;
         $this->helper = new \App\Droit\Helper\Helper();
-        $this->client = $client ? $client : new \GuzzleHttp\Client(['verify' => false, 'http_errors' => false,'debug' => true]);
+        $this->client = $client ? $client : new \GuzzleHttp\Client(['verify' => false, 'http_errors' => false]); // ,'debug' => true
 
         $this->base_url = (\App::environment() == 'local' ? 'https://shop.test/hub' : 'https://www.publications-droit.ch/hub');
 
         $this->toUpdate();
+    }
+
+    public function prepareData($data)
+    {
+        if(!empty($data) && isset($data['data'])){
+            return json_decode(json_encode($data['data']));
+        }
+
+        return null;
     }
 
     public function homepage()
@@ -48,16 +59,9 @@ class Content
         $params = ['params' => ['site_id' => $this->site, 'position' => $position]];
         $params = array_filter($params);
 
-      /*  $menu = \Cache::rememberForever('menu', function () use ($params) {
+        return \Cache::rememberForever('menu', function () use ($params) {
             return $this->getData('menu', $params);
-        });*/
-        $menu = $this->getData('menu', $params);
-
-
-        echo '<pre>';
-        print_r($menu);
-        echo '</pre>';
-        exit();
+        });
     }
 
     public function pdf($id)

@@ -26,14 +26,14 @@ class JurisprudenceTest extends TestCase
         $mock = $this->mock(Client::class);
         $mock->shouldReceive('get')->andReturn(new Response(500, [], 'Hello World'));
 
-        $jurisprudence = new \App\Droit\Api\Jurisprudence(5,$mock);
+        $jurisprudence = new \App\Droit\Api\Jurisprudence(4,$mock);
+        $jurisprudence->toUpdate();
 
-        $this->assertFalse($jurisprudence->toUpdate());
+        $this->assertFalse($jurisprudence->toUpdate);
     }
 
    public function testJurisprudenceHasToUpdateYes()
     {
-
         $helper = new \App\Droit\Helper\Helper();
         $helper->setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
 
@@ -44,11 +44,11 @@ class JurisprudenceTest extends TestCase
             new Response(200,[], json_encode(['date' => \Carbon\Carbon::today()->subDays(4)->toDateString()]))
         );
 
-        $jurisprudence = new \App\Droit\Api\Jurisprudence(5,$mock);
+        $jurisprudence = new \App\Droit\Api\Jurisprudence(4,$mock);
 
-        $result = $jurisprudence->toUpdate();
+        $jurisprudence->toUpdate();
 
-        $this->assertTrue($result);
+        $this->assertTrue($jurisprudence->toUpdate);
     }
 
     public function testJurisprudenceHasToUpdateNo()
@@ -61,8 +61,9 @@ class JurisprudenceTest extends TestCase
             new Response(200,[], json_encode(['date' => \Carbon\Carbon::today()->toDateString()]))
         );
 
-        $jurisprudence = new \App\Droit\Api\Jurisprudence(5,$mock);
+        $jurisprudence = new \App\Droit\Api\Jurisprudence(4,$mock);
+        $jurisprudence->toUpdate();
 
-        $this->assertFalse($jurisprudence->toUpdate());
+        $this->assertFalse($jurisprudence->toUpdate);
     }
 }

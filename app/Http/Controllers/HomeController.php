@@ -87,7 +87,7 @@ class HomeController extends Controller
     {
         $newsletter = $this->jurisprudence->campagne($id);
 
-        $blocs = isset($newsletter['blocs']) ? $newsletter['blocs'] : collect([]);
+        $blocs    = isset($newsletter['blocs']) ? $newsletter['blocs'] : collect([]);
         $campagne = isset($newsletter['campagne']) ? $newsletter['campagne'] : null;
 
         return view('frontend.campagne')->with(['campagne' => $campagne, 'blocs' => $blocs, 'archives' => collect([])]);
