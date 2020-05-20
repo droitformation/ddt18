@@ -7,9 +7,18 @@ trait FetchData
         $current  = $this->helper->getMaj($this->file);
         $response = $this->client->get($this->base_url.'/maj');
 
+        if($response->getStatusCode() == 503){
+            \Log::info('is down don\'t update');
+            return null;
+        }
+
         $last = $this->process($response,$current);
 
         if($last != $current){
+
+            \Log::info('last '.$last);
+            \Log::info('current '.$current);
+
             \Log::info('flushed');
             \Cache::flush();
             $this->toUpdate = true;
@@ -25,7 +34,7 @@ trait FetchData
             $data = json_decode($response->getBody(), true);
             $last = isset($data['date']) ? $data['date'] : \Carbon\Carbon::today()->toDateString();
 
-            $this->helper->setMaj($last,'hub');
+            $this->helper->setMaj($last,$this->file);
         }
 
         return $last;

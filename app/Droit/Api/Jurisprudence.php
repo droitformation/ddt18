@@ -38,12 +38,12 @@ class Jurisprudence
         return collect([]);
     }
 
-    public function arrets($data = [])
+    public function arrets($data = [], $type = '')
     {
         $params = ['params' => ['site_id' => $this->site] + $data];
         $params = array_filter($params);
 
-        return \Cache::rememberForever('arrets', function () use ($params) {
+        return \Cache::rememberForever('arrets'.$type, function () use ($params) {
             return $this->getData('arrets', $params);
         });
     }

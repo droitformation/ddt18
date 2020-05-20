@@ -19,7 +19,11 @@ class HomeController extends Controller
         $this->jurisprudence = new \App\Droit\Api\Jurisprudence(config('app.site'));
         $this->worker = new \App\Droit\Api\ColloqueWorker();
 
-        $menu = $this->content->menu('main');
+        $menu   = $this->content->menu('main');
+        $latest = $this->jurisprudence->arrets(['limit' => 4],'latest');
+
+        view()->share('latest', $latest);
+        view()->share('menu', $menu);
 
         $this->pages = isset($menu->pages) ? collect($menu->pages)->pluck('id','slug')->all() : collect([]);
 
@@ -36,7 +40,7 @@ class HomeController extends Controller
         $homepage = $this->content->homepage();
         $page     = $this->content->page($this->pages['/']);
         $pub      = isset($page->blocs) ? $page->blocs : collect([]);
-        $arrets   = $this->jurisprudence->arrets(['limit' => 5]);
+        $arrets   = $this->jurisprudence->arrets(['limit' => 5],'index');
 
         return view('frontend.index')->with(['homepage' => $homepage, 'arrets' => $arrets, 'pub' => $pub]);
     }

@@ -24,7 +24,7 @@ class JurisprudenceTest extends TestCase
         $helper = new \App\Droit\Helper\Helper();
 
         $mock = $this->mock(Client::class);
-        $mock->shouldReceive('get')->andReturn(new Response(500, [], 'Hello World'));
+        $mock->shouldReceive('get')->andReturn(new Response(503, [], 'Hello World'));
 
         $jurisprudence = new \App\Droit\Api\Jurisprudence(4,$mock);
         $jurisprudence->toUpdate();

@@ -7,7 +7,7 @@ class Content
     use FetchData;
 
     public $site;
-    public $file = 'colloque';
+    public $file = 'content';
     protected $client;
     protected $base_url;
     protected $helper;
@@ -59,7 +59,7 @@ class Content
         $params = ['params' => ['site_id' => $this->site, 'position' => $position]];
         $params = array_filter($params);
 
-        return \Cache::rememberForever('menu', function () use ($params) {
+        return \Cache::rememberForever('menu_'.$position, function () use ($params) {
             return $this->getData('menu', $params);
         });
     }
