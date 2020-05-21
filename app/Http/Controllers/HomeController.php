@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SendMessageRequest;
+use mysql_xdevapi\Collection;
 
 class HomeController extends Controller
 {
@@ -14,12 +15,17 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->content  = new \App\Droit\Api\Content(env('APP_SITE'));
-        $this->jurisprudence = new \App\Droit\Api\Jurisprudence(env('APP_SITE'));
+        $this->content  = new \App\Droit\Api\Content(config('app.site'));
+        $this->jurisprudence = new \App\Droit\Api\Jurisprudence(config('app.site'));
         $this->worker = new \App\Droit\Api\ColloqueWorker();
 
-        $menu = $this->content->menu('main');
-        $this->pages = collect($menu->pages)->pluck('id','slug')->all();
+        $menu   = $this->content->menu('main');
+        $latest = $this->jurisprudence->arrets(['limit' => 4],'latest');
+
+        view()->share('latest', $latest);
+        view()->share('menu', $menu);
+
+        $this->pages = isset($menu->pages) ? collect($menu->pages)->pluck('id','slug')->all() : collect([]);
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -33,8 +39,8 @@ class HomeController extends Controller
     {
         $homepage = $this->content->homepage();
         $page     = $this->content->page($this->pages['/']);
-        $pub      = $page->blocs;
-        $arrets   = $this->jurisprudence->arrets(['limit' => 5]);
+        $pub      = isset($page->blocs) ? $page->blocs : collect([]);
+        $arrets   = $this->jurisprudence->arrets(['limit' => 5],'index');
 
         return view('frontend.index')->with(['homepage' => $homepage, 'arrets' => $arrets, 'pub' => $pub]);
     }
@@ -48,7 +54,7 @@ class HomeController extends Controller
     {
         $auteurs = $this->jurisprudence->authors();
         $page    = $this->content->page($this->pages['auteur']);
-        $pub     = $page->blocs;
+        $pub     = isset($page->blocs) ? $page->blocs : collect([]);
 
         return view('frontend.auteur')->with(['auteurs' => $auteurs, 'page' => $page, 'pub' => $pub]);
     }
@@ -59,7 +65,7 @@ class HomeController extends Controller
         $archives  = $this->worker->getArchives();
 
         $page = $this->content->page($this->pages['colloque']);
-        $pub  = $page->blocs;
+        $pub  = isset($page->blocs) ? $page->blocs : collect([]);
 
         return view('frontend.colloque')->with(array('colloques' => $colloques, 'archives' => $archives , 'pub' => $pub));
     }
@@ -85,7 +91,7 @@ class HomeController extends Controller
     {
         $newsletter = $this->jurisprudence->campagne($id);
 
-        $blocs = isset($newsletter['blocs']) ? $newsletter['blocs'] : collect([]);
+        $blocs    = isset($newsletter['blocs']) ? $newsletter['blocs'] : collect([]);
         $campagne = isset($newsletter['campagne']) ? $newsletter['campagne'] : null;
 
         return view('frontend.campagne')->with(['campagne' => $campagne, 'blocs' => $blocs, 'archives' => collect([])]);
@@ -99,7 +105,7 @@ class HomeController extends Controller
     public function contact()
     {
         $page = $this->content->page($this->pages['contact']);
-        $pub  = $page->blocs;
+        $pub  = isset($page->blocs) ? $page->blocs : collect([]);
 
         return view('frontend.contact')->with(['page' => $page, 'pub' => $pub]);
     }

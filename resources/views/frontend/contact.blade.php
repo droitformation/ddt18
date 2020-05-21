@@ -23,6 +23,7 @@
                         <strong>Telephone</strong>: +41 32 / 718 12 22<br>
                         <strong>Email</strong>: droit.formation@unine.ch
                     </p>
+                    <div class="alert alert-warning">Ce site est dédié aux résumés d'arrêts en droit du travail et non pas un site de conseils juridiques.</div>
                 </div><!--END ONE-HALF-->
 
                 <div class="col-md-8 col-sx-12">

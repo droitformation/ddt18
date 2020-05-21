@@ -1,28 +1,32 @@
 <?php namespace App\Droit\Api;
 
+use App\Droit\Api\FetchData;
+
 class Jurisprudence
 {
+    use FetchData;
+
     public $site;
+    public $file = 'hub';
     protected $client;
     protected $base_url;
+    protected $helper;
 
-    public function __construct($site)
+    public $toUpdate = false;
+
+    public function __construct($site, $client = null)
     {
         $this->site = $site;
+        $this->helper = new \App\Droit\Helper\Helper();
+        $this->client = $client ? $client : new \GuzzleHttp\Client(['verify' => false, 'http_errors' => false]);
 
-        $this->client  = new \GuzzleHttp\Client([ 'verify' => false ]);
+        $this->base_url = (\App::environment() == 'local' ? 'https://shop.test/hub' : 'https://www.publications-droit.ch/hub');
 
-        $environment = app()->environment();
-        $this->base_url = ($environment == 'local' ? 'https://shop.test/hub' : 'https://www.publications-droit.ch/hub');
+        $this->toUpdate();
     }
 
-    public function getData($url, $params = null){
-
-        $action = $params ? 'post' : 'get';
-
-        $response = $this->client->$action( $this->base_url.'/'.$url, ['query' => $params]);
-        $data     = json_decode($response->getBody(), true);
-
+    public function prepareData($data)
+    {
         if(!empty($data) && isset($data['data'])){
             $collection = new \Illuminate\Support\Collection($data['data']);
 
@@ -34,12 +38,14 @@ class Jurisprudence
         return collect([]);
     }
 
-    public function arrets($data = [])
+    public function arrets($data = [], $type = '')
     {
         $params = ['params' => ['site_id' => $this->site] + $data];
         $params = array_filter($params);
 
-        return $this->getData('arrets', $params);
+        return \Cache::rememberForever('arrets'.$type, function () use ($params) {
+            return $this->getData('arrets', $params);
+        });
     }
 
     public function analyses($data = [])
@@ -47,35 +53,56 @@ class Jurisprudence
         $params = ['params' => ['site_id' => $this->site] + $data];
         $params = array_filter($params);
 
-        return $this->getData('analyses', $params);
+        return \Cache::rememberForever('analyses', function () use ($params) {
+            return $this->getData('analyses', $params);
+        });
     }
 
     public function years()
     {
-        return $this->getData('years', ['params' => ['site_id' => $this->site]]);
+        $params = ['params' => ['site_id' => $this->site]];
+
+        return \Cache::rememberForever('years', function () use ($params) {
+            return $this->getData('years', $params);
+        });
     }
 
     public function categories()
     {
-        $data = $this->getData('categories', ['params' => ['site_id' => $this->site]]);
+        $params = ['params' => ['site_id' => $this->site]];
 
-        return [collect($data['categories']),collect($data['parents'])];
+        return \Cache::rememberForever('categories', function () use ($params) {
+            $data = $this->getData('categories', $params);
+
+            return [collect($data['categories']),collect($data['parents'])];
+        });
     }
 
     public function authors()
     {
-        return $this->getData('authors', ['params' => ['site_id' => $this->site]]);
+        $params = ['params' => ['site_id' => $this->site]];
+
+        return \Cache::rememberForever('authors', function () use ($params) {
+            return $this->getData('authors', $params);
+        });
     }
 
     public function campagne($id = null)
     {
-        $campagne = $this->getData('campagne', ['params' => ['site_id' => $this->site, 'id' => $id]]);
+        $params = ['params' => ['site_id' => $this->site, 'id' => $id]];
 
-        return $campagne->all();
+        return \Cache::rememberForever('campagne', function () use ($params) {
+            $campagne = $this->getData('campagne', $params);
+            return $campagne->all();
+        });
     }
 
     public function archives($year = null)
     {
-        return $this->getData('archives', ['params' => ['site_id' => $this->site, 'year' => $year]]);
+        $params = ['params' => ['site_id' => $this->site, 'year' => $year]];
+
+        return \Cache::rememberForever('archives', function () use ($params) {
+            return $this->getData('archives', $params);
+        });
     }
 }

@@ -534,5 +534,13 @@ class Helper {
 		return $html;
 	}
 
+    public function setMaj($date,$what)
+    {
+        return \Storage::disk('local')->put($what.'.txt', $date);
+    }
 
+    public function getMaj($what)
+    {
+        return \Storage::disk('local')->get($what.'.txt');
+    }
 }

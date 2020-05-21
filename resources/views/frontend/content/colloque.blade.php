@@ -9,12 +9,12 @@
                 <p><strong>Lieu: </strong><cite>{{ $bloc->colloque->location }}</cite></p>
                 <p><a target="_blank"
                       style="padding: 5px 10px; text-decoration: none; background: {{ $campagne->color }}; color: #fff; margin-top: 10px; display: inline-block;"
-                      href="http://publications-droit.ch/pubdroit/colloque/{{ $bloc->colloque->id }}">Informations et inscription</a></p>
+						  href="http://publications-droit.ch/pubdroit/colloque/{{ $bloc->colloque->id }}">Informations et inscription</a></p>
             </div>
         </div><!--END POST-->
     </div>
     <div class="col-md-3 listCat">
-        <a target="_blank" href="http://publications-droit.ch/pubdroit/colloque/{{ $bloc->colloque->id }}">
+		<a target="_blank" href="http://publications-droit.ch/pubdroit/colloque/{{ $bloc->colloque->id }}">
             <img width="130" border="0" alt="{{ $bloc->colloque->title }}" src="{{ $bloc->colloque->image }}" />
         </a>
     </div>

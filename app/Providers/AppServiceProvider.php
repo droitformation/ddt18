@@ -15,8 +15,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        view()->composer('frontend/*', 'App\Http\ViewComposers\LatestComposer');
-        view()->composer('frontend/*', 'App\Http\ViewComposers\PageComposer');
     }
 
     /**

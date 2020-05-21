@@ -9,13 +9,13 @@
                 <div>{!! $bloc->product->description !!}</div>
                 <p><a target="_blank"
                       style="padding: 5px 15px; text-decoration: none; background: {{ $campagne->color }}; color: #fff; margin-top: 10px; display: inline-block;"
-                      href="{{ url('pubdroit/product/'.$bloc->product->id) }}">Acheter</a>
+                      href="{{ $bloc->product->link ?? '#' }}">Acheter</a>
                 </p>
             </div>
         </div><!--END POST-->
     </div>
     <div class="col-md-3 listCat">
-        <a target="_blank" href="{{ url('pubdroit/product/'.$bloc->product->id) }}">
+        <a target="_blank" href="{{ $bloc->product->link ?? '#' }}">
             <img width="130" border="0" alt="{{ $bloc->product->title }}" src="{{ $bloc->product->image }}" />
         </a>
     </div>
