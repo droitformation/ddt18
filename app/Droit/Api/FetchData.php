@@ -11,6 +11,11 @@ trait FetchData
             \Log::info('is down don\'t update');
             return null;
         }
+        
+        \Cache::flush();
+        $this->toUpdate = true;
+        
+        return true;
 
         $last = $this->process($response,$current);
 
