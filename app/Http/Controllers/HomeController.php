@@ -146,4 +146,12 @@ class HomeController extends Controller
 
         return redirect($url);
     }
+
+    public function updateCache()
+    {
+        dispatch(function () {
+            \Artisan::call('cache:clear');
+        });
+    }
+
 }
