@@ -35,7 +35,7 @@
         </div>
 
         <div class="col-md-3 col-sm-4 last listCat listAnalyse">
-            <img style="max-width: 140px;" border="0" alt="Analyses" src="<?php echo asset('files/analyse.png') ?>">
+            <img style="max-width: 140px;" border="0" alt="Analyses" src="<?php echo asset('files/pictos/analyse.png') ?>">
         </div>
     </div>
     <div class="divider-border-nofloat"></div>
